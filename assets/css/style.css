@@ -1,0 +1,241 @@
+/* =================================================================
+   SkillSwap Campus - Master Style System
+   Color Palette: Deep Navy (#0f172a, #1e293b), Violet (#6366f1, #4f46e5), 
+   Light Slate (#f8fafc), Soft Card Accents & Clean Typography
+   ================================================================= */
+
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #e0e7ff;
+  --secondary: #0ea5e9;
+  --accent: #8b5cf6;
+  --dark-bg: #0f172a;
+  --dark-card: #1e293b;
+  --light-bg: #f8fafc;
+  --surface: #ffffff;
+  --border-color: #e2e8f0;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
+  --transition-fast: all 0.2s ease-in-out;
+  --transition-normal: all 0.3s ease-in-out;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-main);
+  min-height: 100vh;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Typography & Links */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* Buttons System */
+.btn-primary-custom {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+  transition: var(--transition-normal);
+}
+
+.btn-primary-custom:hover {
+  background: linear-gradient(135deg, var(--primary-hover) 0%, #7c3aed 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+
+.btn-outline-custom {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  padding: 0.6rem 1.3rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.btn-outline-custom:hover {
+  background: var(--primary-light);
+  color: var(--primary-hover);
+}
+
+/* Cards & Elevate Effects */
+.card-custom {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+  overflow: hidden;
+}
+
+.card-custom:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+/* Skill Badges */
+.badge-teach {
+  background-color: #dcfce7;
+  color: #15803d;
+  font-weight: 600;
+  padding: 0.35em 0.75em;
+  border-radius: var(--radius-full);
+}
+
+.badge-learn {
+  background-color: #e0e7ff;
+  color: #4338ca;
+  font-weight: 600;
+  padding: 0.35em 0.75em;
+  border-radius: var(--radius-full);
+}
+
+.badge-level {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.5rem;
+}
+
+/* Match Score Circular Badge */
+.match-ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: conic-gradient(var(--primary) calc(var(--score) * 1%), #e2e8f0 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.match-ring::before {
+  content: '';
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.match-ring-text {
+  position: relative;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--primary);
+}
+
+/* Navbar */
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.8rem 1.5rem;
+  sticky: top;
+}
+
+/* Hero Banner on Landing Page */
+.hero-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #31104b 100%);
+  color: #ffffff;
+  padding: 5rem 0 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-tagline {
+  color: #818cf8;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+/* Password Strength Bar */
+.password-strength-bar {
+  height: 5px;
+  border-radius: 4px;
+  background-color: #e2e8f0;
+  margin-top: 6px;
+  transition: var(--transition-fast);
+}
+
+/* Toast Notifications Container */
+.toast-container-custom {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.3rem; }
+  .navbar-custom { padding: 0.6rem 1rem; }
+}

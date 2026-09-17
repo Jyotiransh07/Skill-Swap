@@ -69,6 +69,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
+// Handle Edit Session
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'edit_session') {
+    $sessionId   = (int)($_POST['session_id'] ?? 0);
+    $sessionDate = sanitize($_POST['session_date'] ?? '');
+    $startTime   = sanitize($_POST['start_time'] ?? '');
+    $endTime     = sanitize($_POST['end_time'] ?? '');
+    $mode        = sanitize($_POST['mode'] ?? 'ONLINE');
+    $meetingLink = sanitize($_POST['meeting_link'] ?? '');
+    $location    = sanitize($_POST['location'] ?? '');
+    $csrf_token  = $_POST['csrf_token'] ?? '';
+
+    if (!verify_csrf_token($csrf_token)) {
+        $error = 'Security check failed.';
+    } elseif ($sessionId <= 0 || empty($sessionDate) || empty($startTime) || empty($endTime)) {
+        $error = 'Please fill out date and start/end times.';
+    } else {
+        // Verify user is part of the session
+        $stmtChk = $pdo->prepare("SELECT * FROM sessions WHERE session_id = :id AND (teacher_id = :uid1 OR learner_id = :uid2)");
+        $stmtChk->execute(['id' => $sessionId, 'uid1' => $currentUserId, 'uid2' => $currentUserId]);
+        $sess = $stmtChk->fetch();
+
+        if (!$sess) {
+            $error = 'Session not found or permission denied.';
+        } else {
+            $stmtUp = $pdo->prepare("
+                UPDATE sessions 
+                SET session_date = :sdate, start_time = :stime, end_time = :etime, mode = :mode, meeting_link = :mlink, location = :loc
+                WHERE session_id = :id
+            ");
+            $stmtUp->execute([
+                'sdate' => $sessionDate,
+                'stime' => $startTime,
+                'etime' => $endTime,
+                'mode'  => $mode,
+                'mlink' => $meetingLink,
+                'loc'   => $location,
+                'id'    => $sessionId
+            ]);
+            
+            // Notify partner
+            $partnerId = ($currentUserId === $sess['teacher_id']) ? $sess['learner_id'] : $sess['teacher_id'];
+            create_notification($pdo, $partnerId, "A session on " . date('M d', strtotime($sessionDate)) . " has been updated by your partner.", "SESSION");
+
+            set_flash('success', 'Session updated successfully!');
+            header('Location: ' . $baseUrl . 'student/sessions.php');
+            exit;
+        }
+    }
+}
+
 // Handle Mark Complete
 if (isset($_GET['complete']) && (int)$_GET['complete'] > 0) {
     $sessId = (int)$_GET['complete'];
@@ -173,9 +223,15 @@ require_once __DIR__ . '/../includes/navbar.php';
 
               <div class="d-flex justify-content-between align-items-center">
                 <span class="badge bg-warning-subtle text-warning border border-warning">SCHEDULED</span>
-                <a href="sessions.php?complete=<?= $sess['session_id'] ?>" class="btn btn-sm btn-success" onclick="return confirm('Mark this session as completed?');">
-                  <i class="bi bi-check2-circle me-1"></i> Mark Completed
-                </a>
+                <div>
+                  <button type="button" class="btn btn-sm btn-outline-primary me-2" 
+                          onclick="openEditModal(<?= $sess['session_id'] ?>, '<?= $sess['session_date'] ?>', '<?= $sess['start_time'] ?>', '<?= $sess['end_time'] ?>', '<?= $sess['mode'] ?>', '<?= htmlspecialchars(addslashes($sess['meeting_link'])) ?>', '<?= htmlspecialchars(addslashes($sess['location'])) ?>')">
+                    <i class="bi bi-pencil-square me-1"></i> Edit
+                  </button>
+                  <a href="sessions.php?complete=<?= $sess['session_id'] ?>" class="btn btn-sm btn-success" onclick="return confirm('Mark this session as completed?');">
+                    <i class="bi bi-check2-circle me-1"></i> Mark Completed
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -279,5 +335,86 @@ require_once __DIR__ . '/../includes/navbar.php';
     </div>
   </div>
 </div>
+
+<!-- EDIT SESSION MODAL -->
+<div class="modal fade" id="editSessionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold text-dark mb-0"><i class="bi bi-pencil-square text-primary me-2"></i>Edit Session</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" action="sessions.php">
+        <div class="modal-body p-4">
+          <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+          <input type="hidden" name="action" value="edit_session">
+          <input type="hidden" name="session_id" id="edit_session_id" value="">
+
+          <div class="mb-3">
+            <label for="edit_session_date" class="form-label fw-semibold">Session Date *</label>
+            <input type="date" class="form-control" id="edit_session_date" name="session_date" required>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label for="edit_start_time" class="form-label fw-semibold">Start Time *</label>
+              <input type="time" class="form-control" id="edit_start_time" name="start_time" required>
+            </div>
+            <div class="col-6">
+              <label for="edit_end_time" class="form-label fw-semibold">End Time *</label>
+              <input type="time" class="form-control" id="edit_end_time" name="end_time" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="edit_mode" class="form-label fw-semibold">Mode *</label>
+            <select class="form-select" id="edit_mode" name="mode" required>
+              <option value="ONLINE">ONLINE (Google Meet / Zoom)</option>
+              <option value="OFFLINE">OFFLINE (In-Person Campus Location)</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="edit_meeting_link" class="form-label fw-semibold">Meeting Link (For Online)</label>
+            <input type="url" class="form-control" id="edit_meeting_link" name="meeting_link" placeholder="https://meet.google.com/abc-xyz">
+          </div>
+
+          <div class="mb-3">
+            <label for="edit_location" class="form-label fw-semibold">Location (For Offline)</label>
+            <input type="text" class="form-control" id="edit_location" name="location" placeholder="e.g. Central Library Study Room 3">
+          </div>
+        </div>
+
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary-custom">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function openEditModal(id, date, start, end, mode, link, loc) {
+    document.getElementById('edit_session_id').value = id;
+    document.getElementById('edit_session_date').value = date;
+    document.getElementById('edit_start_time').value = start;
+    document.getElementById('edit_end_time').value = end;
+    document.getElementById('edit_mode').value = mode;
+    document.getElementById('edit_meeting_link').value = link;
+    document.getElementById('edit_location').value = loc;
+    
+    // Using vanilla JS approach from script.js bypass
+    const modalEl = document.getElementById('editSessionModal');
+    modalEl.classList.add('show', 'd-block');
+    document.body.classList.add('modal-open');
+    
+    if(!document.querySelector('.modal-backdrop')) {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop fade show';
+        document.body.appendChild(backdrop);
+    }
+}
+</script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -79,14 +79,14 @@ require_once __DIR__ . '/../includes/header.php';
           <div class="bg-primary text-white rounded-3 p-2 fw-bold"><i class="bi bi-arrow-repeat fs-4"></i></div>
           <span class="fs-4 fw-bold">SkillSwap Campus</span>
         </div>
-        <h2 class="display-6 fw-bold mb-3">Learn. Teach. Connect.</h2>
-        <p class="text-indigo-200 fs-5">Exchange knowledge with fellow college students without spending money.</p>
+        <h2 class="display-6 fw-bold mb-3 text-white">Learn. Teach. Connect.</h2>
+        <p class="text-white-50 fs-5">Exchange knowledge with fellow college students without spending money.</p>
       </div>
 
       <div class="p-4 rounded-3" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);">
         <div class="d-flex align-items-center gap-3 mb-2">
           <i class="bi bi-stars text-warning fs-3"></i>
-          <span class="fw-bold">Smart Compatibility Engine</span>
+          <span class="fw-bold text-white">Smart Compatibility Engine</span>
         </div>
         <p class="small text-white-50 mb-0">Our automated algorithm pairs your learning goals with students who teach exactly what you need.</p>
       </div>
@@ -106,7 +106,7 @@ require_once __DIR__ . '/../includes/header.php';
       <?php if (!empty($error)): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           <i class="bi bi-exclamation-circle-fill me-2"></i> <?= htmlspecialchars($error) ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="this.closest('.alert').remove();"></button>
         </div>
       <?php endif; ?>
 

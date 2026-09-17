@@ -10,7 +10,7 @@ $baseUrl = get_base_url();
         <div class="alert alert-<?= $flash['type'] === 'danger' ? 'danger' : htmlspecialchars($flash['type']) ?> alert-dismissible fade show shadow-lg" role="alert">
             <i class="bi bi-info-circle-fill me-2"></i>
             <?= htmlspecialchars($flash['message']) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="this.closest('.alert').remove();" aria-label="Close"></button>
         </div>
     </div>
     <?php endif; ?>
@@ -20,9 +20,9 @@ $baseUrl = get_base_url();
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Custom Scripts -->
-    <script src="<?= $baseUrl ?>assets/js/script.js"></script>
-    <script src="<?= $baseUrl ?>assets/js/dashboard.js"></script>
-    <script src="<?= $baseUrl ?>assets/js/validation.js"></script>
+    <!-- Custom Scripts (Cache-Busted) -->
+    <script src="<?= $baseUrl ?>assets/js/script.js?v=<?= time() ?>"></script>
+    <script src="<?= $baseUrl ?>assets/js/dashboard.js?v=<?= time() ?>"></script>
+    <script src="<?= $baseUrl ?>assets/js/validation.js?v=<?= time() ?>"></script>
 </body>
 </html>

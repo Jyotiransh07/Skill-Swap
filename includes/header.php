@@ -15,6 +15,18 @@ $pageTitle = $pageTitle ?? 'SkillSwap Campus - Learn. Teach. Connect.';
     <title><?= htmlspecialchars($pageTitle) ?></title>
     <meta name="description" content="Peer-to-peer student skill exchange platform for colleges. Swap skills without money!">
     
+    <?php if (isset($_SESSION['user_id'])): ?>
+    <script>
+      // Automatically log out if the page is refreshed
+      window.addEventListener('load', function() {
+          const entries = performance.getEntriesByType("navigation");
+          if (entries.length > 0 && entries[0].type === "reload") {
+              window.location.href = "<?= $baseUrl ?>auth/logout-refresh.php";
+          }
+      });
+    </script>
+    <?php endif; ?>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

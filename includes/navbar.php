@@ -96,21 +96,29 @@ if ($isLoggedIn) {
           </div>
 
           <!-- User Menu Dropdown -->
-          <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle gap-2" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="<?= $baseUrl ?>uploads/profiles/<?= htmlspecialchars($userAvatar) ?>" alt="Avatar" class="avatar-sm" onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($userName) ?>&background=4f46e5&color=fff';">
+          <div class="dropdown d-flex align-items-center bg-white border rounded-pill p-1 pe-2 shadow-sm">
+            <?php
+              $profileLink = $userRole === 'admin' ? $baseUrl . 'admin/dashboard.php' : $baseUrl . 'student/profile.php';
+            ?>
+            <a href="<?= $profileLink ?>" class="d-flex align-items-center text-dark text-decoration-none gap-2">
+              <img src="<?= $baseUrl ?>uploads/profiles/<?= htmlspecialchars($userAvatar) ?>" alt="Avatar" class="avatar-sm rounded-circle" onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($userName) ?>&background=4f46e5&color=fff';" style="width:32px; height:32px; object-fit:cover;">
               <span class="fw-bold d-none d-md-inline-block"><?= htmlspecialchars($userName) ?></span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="userMenu">
+            
+            <a href="#" class="text-secondary ms-2 text-decoration-none" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" style="padding-left: 5px; border-left: 1px solid #dee2e6;">
+              <i class="bi bi-caret-down-fill" style="font-size: 0.8rem;"></i>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3" aria-labelledby="userMenu">
               <?php if ($userRole === 'admin'): ?>
-                <li><a class="dropdown-menu-item dropdown-item fw-semibold" href="<?= $baseUrl ?>admin/dashboard.php"><i class="bi bi-speedometer2 me-2 text-primary"></i> Admin Panel</a></li>
+                <li><a class="dropdown-item fw-semibold py-2" href="<?= $baseUrl ?>admin/dashboard.php"><i class="bi bi-speedometer2 me-2 text-primary"></i> Admin Panel</a></li>
               <?php else: ?>
-                <li><a class="dropdown-menu-item dropdown-item fw-semibold" href="<?= $baseUrl ?>student/dashboard.php"><i class="bi bi-grid me-2 text-primary"></i> Dashboard</a></li>
-                <li><a class="dropdown-menu-item dropdown-item fw-semibold" href="<?= $baseUrl ?>student/profile.php"><i class="bi bi-person me-2 text-primary"></i> My Profile</a></li>
-                <li><a class="dropdown-menu-item dropdown-item fw-semibold" href="<?= $baseUrl ?>student/edit-profile.php"><i class="bi bi-gear me-2 text-primary"></i> Settings</a></li>
+                <li><a class="dropdown-item fw-semibold py-2" href="<?= $baseUrl ?>student/dashboard.php"><i class="bi bi-grid me-2 text-primary"></i> Dashboard</a></li>
+                <li><a class="dropdown-item fw-semibold py-2" href="<?= $baseUrl ?>student/profile.php"><i class="bi bi-person me-2 text-primary"></i> My Profile</a></li>
+                <li><a class="dropdown-item fw-semibold py-2" href="<?= $baseUrl ?>student/edit-profile.php"><i class="bi bi-gear me-2 text-primary"></i> Settings</a></li>
               <?php endif; ?>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger fw-semibold" href="<?= $baseUrl ?>auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+              <li><a class="dropdown-item text-danger fw-semibold py-2" href="<?= $baseUrl ?>auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
             </ul>
           </div>
 

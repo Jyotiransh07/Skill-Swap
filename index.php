@@ -66,33 +66,33 @@ require_once __DIR__ . '/includes/navbar.php';
   <div class="container py-5">
     <div class="row align-items-center g-5">
       <div class="col-lg-6">
-        <div class="hero-tagline mb-2"><i class="bi bi-mortarboard-fill me-2"></i> Campus Peer-to-Peer Learning</div>
-        <h1 class="hero-title mb-3">Learn. Teach.<br>Connect.</h1>
-        <p class="fs-5 text-light opacity-90 mb-4 me-lg-4">
+        <div class="hero-tagline mb-2 text-info fw-bold"><i class="bi bi-mortarboard-fill me-2"></i> Campus Peer-to-Peer Learning</div>
+        <h1 class="hero-title text-white mb-3">Learn. Teach.<br>Connect.</h1>
+        <p class="fs-5 text-white-50 mb-4 me-lg-4">
           Turn the skills you know into opportunities to learn the skills you want. Peer-to-peer knowledge exchange designed specifically for college students — 100% free with zero cash required.
         </p>
         <div class="d-flex flex-wrap gap-3">
-          <a href="<?= isset($_SESSION['user_id']) ? $baseUrl . 'student/matches.php' : $baseUrl . 'auth/register.php' ?>" class="btn btn-primary-custom btn-lg">
+          <a href="<?= isset($_SESSION['user_id']) ? $baseUrl . 'student/matches.php' : $baseUrl . 'auth/register.php' ?>" class="btn btn-primary-custom btn-lg border-0 shadow" style="background:#6366f1;">
             <i class="bi bi-arrow-repeat me-2"></i> Start Swapping Now
           </a>
-          <a href="<?= $baseUrl ?>student/find-skills.php" class="btn btn-outline-light btn-lg rounded-3 fw-semibold">
+          <a href="<?= $baseUrl ?>student/find-skills.php" class="btn btn-outline-light btn-lg border border-secondary">
             <i class="bi bi-search me-2"></i> Explore Skills
           </a>
         </div>
 
-        <div class="d-flex align-items-center gap-4 mt-5 pt-3 border-top border-secondary border-opacity-25">
+        <div class="d-flex align-items-center gap-4 mt-5 pt-3 border-top border-light border-opacity-25">
           <div>
             <div class="h3 fw-bold text-white mb-0"><?= number_format($stats['total_students']) ?>+</div>
             <div class="small text-white-50">Active Students</div>
           </div>
-          <div class="vr bg-white opacity-25"></div>
+          <div class="vr bg-light opacity-25"></div>
           <div>
             <div class="h3 fw-bold text-white mb-0"><?= number_format($stats['total_skills']) ?>+</div>
             <div class="small text-white-50">Skills Listed</div>
           </div>
-          <div class="vr bg-white opacity-25"></div>
+          <div class="vr bg-light opacity-25"></div>
           <div>
-            <div class="h3 fw-bold text-warning mb-0">100%</div>
+            <div class="h3 fw-bold text-info mb-0">100%</div>
             <div class="small text-white-50">Free Peer Exchange</div>
           </div>
         </div>
@@ -253,51 +253,51 @@ require_once __DIR__ . '/includes/navbar.php';
 </section>
 
 <!-- Call to Action Banner -->
-<section class="py-5 text-white text-center" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+<section class="py-5 bg-light text-center border-top">
   <div class="container py-4">
-    <h2 class="display-5 fw-bold mb-3">Ready to Start Swapping Skills?</h2>
-    <p class="fs-5 opacity-90 mb-4 max-w-600 mx-auto">Join hundreds of college students sharing Python, UI/UX, C++, Robotics, and Web Development today.</p>
-    <a href="<?= $baseUrl ?>auth/register.php" class="btn btn-light btn-lg text-primary fw-bold px-5 py-3 shadow">
+    <h2 class="display-5 fw-bold mb-3 text-dark">Ready to Start Swapping Skills?</h2>
+    <p class="fs-5 text-muted mb-4 max-w-600 mx-auto">Join hundreds of college students sharing Python, UI/UX, C++, Robotics, and Web Development today.</p>
+    <a href="<?= $baseUrl ?>auth/register.php" class="btn btn-primary-custom btn-lg px-5 py-3 shadow-sm">
       Get Started For Free
     </a>
   </div>
 </section>
 
 <!-- Footer -->
-<footer class="bg-dark text-white-50 py-5">
+<footer class="bg-white text-muted py-5 border-top">
   <div class="container">
-    <div class="row g-4 border-bottom border-secondary border-opacity-25 pb-4 mb-4">
+    <div class="row g-4 border-bottom pb-4 mb-4">
       <div class="col-lg-4">
         <div class="d-flex align-items-center gap-2 mb-3">
-          <div class="bg-primary text-white rounded-3 p-2 fw-bold"><i class="bi bi-arrow-repeat fs-4"></i></div>
-          <span class="fs-4 fw-bold text-white">SkillSwap Campus</span>
+          <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 32px; height: 32px;"><i class="bi bi-arrow-repeat"></i></div>
+          <span class="fs-5 fw-bold text-dark">SkillSwap Campus</span>
         </div>
-        <p class="small text-white-50">SkillSwap Campus is a peer-to-peer knowledge exchange application designed specifically for college students to learn and teach skills without monetary transactions.</p>
+        <p class="small">SkillSwap Campus is a peer-to-peer knowledge exchange application designed specifically for college students to learn and teach skills without monetary transactions.</p>
       </div>
 
       <div class="col-6 col-lg-2">
-        <h6 class="text-white fw-bold mb-3">Platform</h6>
+        <h6 class="text-dark fw-bold mb-3">Platform</h6>
         <ul class="list-unstyled small">
-          <li class="mb-2"><a href="<?= $baseUrl ?>index.php" class="text-white-50 text-decoration-none">Home</a></li>
-          <li class="mb-2"><a href="<?= $baseUrl ?>student/find-skills.php" class="text-white-50 text-decoration-none">Explore Skills</a></li>
-          <li class="mb-2"><a href="<?= $baseUrl ?>student/matches.php" class="text-white-50 text-decoration-none">Smart Matches</a></li>
+          <li class="mb-2"><a href="<?= $baseUrl ?>index.php" class="text-muted text-decoration-none hover-primary">Home</a></li>
+          <li class="mb-2"><a href="<?= $baseUrl ?>student/find-skills.php" class="text-muted text-decoration-none hover-primary">Explore Skills</a></li>
+          <li class="mb-2"><a href="<?= $baseUrl ?>student/matches.php" class="text-muted text-decoration-none hover-primary">Smart Matches</a></li>
         </ul>
       </div>
 
       <div class="col-6 col-lg-2">
-        <h6 class="text-white fw-bold mb-3">Account</h6>
+        <h6 class="text-dark fw-bold mb-3">Account</h6>
         <ul class="list-unstyled small">
-          <li class="mb-2"><a href="<?= $baseUrl ?>auth/login.php" class="text-white-50 text-decoration-none">Student Login</a></li>
-          <li class="mb-2"><a href="<?= $baseUrl ?>auth/register.php" class="text-white-50 text-decoration-none">Register Account</a></li>
-          <li class="mb-2"><a href="<?= $baseUrl ?>admin/dashboard.php" class="text-white-50 text-decoration-none">Admin Panel</a></li>
+          <li class="mb-2"><a href="<?= $baseUrl ?>auth/login.php" class="text-muted text-decoration-none hover-primary">Student Login</a></li>
+          <li class="mb-2"><a href="<?= $baseUrl ?>auth/register.php" class="text-muted text-decoration-none hover-primary">Register Account</a></li>
+          <li class="mb-2"><a href="<?= $baseUrl ?>admin/dashboard.php" class="text-muted text-decoration-none hover-primary">Admin Panel</a></li>
         </ul>
       </div>
 
       <div class="col-lg-4">
-        <h6 class="text-white fw-bold mb-3">Environment Specs</h6>
-        <p class="small text-white-50 mb-1"><strong>Stack:</strong> PHP 8+, MySQL, WAMP, Apache</p>
-        <p class="small text-white-50 mb-1"><strong>Path:</strong> <code>C:\wamp64\www\skillswap\</code></p>
-        <p class="small text-white-50"><strong>URL:</strong> <code>http://localhost/skillswap/</code></p>
+        <h6 class="text-dark fw-bold mb-3">Environment Specs</h6>
+        <p class="small text-muted mb-1"><strong>Stack:</strong> PHP 8+, MySQL, WAMP, Apache</p>
+        <p class="small text-muted mb-1"><strong>Path:</strong> <code>C:\wamp64\www\skillswap\</code></p>
+        <p class="small text-muted"><strong>URL:</strong> <code>http://localhost/skillswap/</code></p>
       </div>
     </div>
 

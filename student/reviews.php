@@ -115,7 +115,7 @@ require_once __DIR__ . '/../includes/navbar.php';
       <?php if (!empty($error)): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           <i class="bi bi-exclamation-circle-fill me-2"></i> <?= htmlspecialchars($error) ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="this.closest('.alert').remove();"></button>
         </div>
       <?php endif; ?>
 

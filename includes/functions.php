@@ -197,3 +197,23 @@ function update_reputation_score(PDO $pdo, int $user_id): void {
         $stmtUpdate->execute(['score' => $score, 'id' => $user_id]);
     }
 }
+
+// Temporary Auto-Migration for New Features
+try {
+    $migrationPdo = Database::getConnection();
+    $migrationPdo->exec("
+    CREATE TABLE IF NOT EXISTS `messages` (
+      `message_id` INT AUTO_INCREMENT PRIMARY KEY,
+      `sender_id` INT NOT NULL,
+      `receiver_id` INT NOT NULL,
+      `message` TEXT NOT NULL,
+      `is_read` TINYINT(1) DEFAULT 0,
+      `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+      FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    ");
+} catch (Exception $e) {
+    // Ignore if already created or errors out
+}
+

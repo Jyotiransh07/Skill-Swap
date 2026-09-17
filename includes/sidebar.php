@@ -89,6 +89,16 @@ $currentScript = basename($_SERVER['SCRIPT_NAME']);
         </a>
       </li>
       <li class="sidebar-item">
+        <a href="<?= $baseUrl ?>student/calendar.php" class="sidebar-link <?= $currentScript === 'calendar.php' ? 'active' : '' ?>">
+          <i class="bi bi-calendar3"></i> <span>Interactive Calendar</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="<?= $baseUrl ?>student/messages.php" class="sidebar-link <?= $currentScript === 'messages.php' ? 'active' : '' ?>">
+          <i class="bi bi-chat-dots"></i> <span>Messages</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
         <a href="<?= $baseUrl ?>student/reviews.php" class="sidebar-link <?= $currentScript === 'reviews.php' ? 'active' : '' ?>">
           <i class="bi bi-chat-square-quote"></i> <span>Reviews</span>
         </a>

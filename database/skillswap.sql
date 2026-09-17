@@ -22,6 +22,7 @@ DROP VIEW IF EXISTS `vw_skill_demand_supply`;
 
 DROP TABLE IF EXISTS `reports`;
 DROP TABLE IF EXISTS `notifications`;
+DROP TABLE IF EXISTS `messages`;
 DROP TABLE IF EXISTS `reviews`;
 DROP TABLE IF EXISTS `sessions`;
 DROP TABLE IF EXISTS `learning_requests`;
@@ -151,7 +152,21 @@ CREATE TABLE `notifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- -----------------------------------------------------------------
--- Table 8: REPORTS
+-- Table 8: MESSAGES
+-- -----------------------------------------------------------------
+CREATE TABLE `messages` (
+  `message_id` INT AUTO_INCREMENT PRIMARY KEY,
+  `sender_id` INT NOT NULL,
+  `receiver_id` INT NOT NULL,
+  `message` TEXT NOT NULL,
+  `is_read` TINYINT(1) DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------------------------------------------
+-- Table 9: REPORTS
 -- -----------------------------------------------------------------
 CREATE TABLE `reports` (
   `report_id` INT AUTO_INCREMENT PRIMARY KEY,

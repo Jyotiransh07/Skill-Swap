@@ -301,9 +301,8 @@ require_once __DIR__ . '/includes/navbar.php';
       </div>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center small">
+    <div class="d-flex justify-content-center align-items-center small">
       <div>&copy; <?= date('Y') ?> SkillSwap Campus. All rights reserved.</div>
-      <div>Designed with <i class="bi bi-heart-fill text-danger"></i> for College Project.</div>
     </div>
   </div>
 </footer>

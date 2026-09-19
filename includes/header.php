@@ -42,3 +42,4 @@ $pageTitle = $pageTitle ?? 'SkillSwap Campus - Learn. Teach. Connect.';
     <link rel="stylesheet" href="<?= $baseUrl ?>assets/css/dashboard.css">
 </head>
 <body>
+    <div class="page-curtain is-opening" id="pageCurtain"></div>

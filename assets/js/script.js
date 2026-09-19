@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
           document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
             if (openMenu !== menu) {
               openMenu.classList.remove('show');
+              openMenu.removeAttribute('data-bs-popper');
               const otherToggle = openMenu.closest('.dropdown').querySelector('[data-bs-toggle="dropdown"]');
               if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
             }
@@ -79,9 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
           // Toggle current
           if (menu.classList.contains('show')) {
             menu.classList.remove('show');
+            menu.removeAttribute('data-bs-popper');
             dropdownToggle.setAttribute('aria-expanded', 'false');
           } else {
             menu.classList.add('show');
+            menu.setAttribute('data-bs-popper', 'static');
             dropdownToggle.setAttribute('aria-expanded', 'true');
           }
         }
@@ -91,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!e.target.closest('.dropdown-menu')) {
         document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
           openMenu.classList.remove('show');
+          openMenu.removeAttribute('data-bs-popper');
           const toggle = openMenu.closest('.dropdown').querySelector('[data-bs-toggle="dropdown"]');
           if (toggle) toggle.setAttribute('aria-expanded', 'false');
         });
@@ -188,4 +192,36 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
+
+  // Page Curtain Transition Interceptor
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.href) {
+      const url = link.href;
+      const hrefAttr = link.getAttribute('href');
+      
+      // Only intercept internal links that don't have targets or special handlers
+      if (
+        url.startsWith(window.location.origin) &&
+        !link.getAttribute('target') &&
+        !link.getAttribute('data-bs-toggle') &&
+        !link.hasAttribute('download') &&
+        hrefAttr && 
+        !hrefAttr.startsWith('#') &&
+        !hrefAttr.startsWith('javascript:')
+      ) {
+        e.preventDefault();
+        const curtain = document.getElementById('pageCurtain');
+        if (curtain) {
+          curtain.classList.remove('is-opening');
+          curtain.classList.add('is-closing');
+          setTimeout(() => {
+            window.location.href = url;
+          }, 500); // Wait for the transition to mostly finish before redirect
+        } else {
+          window.location.href = url;
+        }
+      }
+    }
+  });
 });

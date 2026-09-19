@@ -234,6 +234,34 @@ a:hover {
   animation: fadeIn 0.4s ease-out forwards;
 }
 
+/* Page Curtain Transition Effect */
+.page-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--primary);
+  z-index: 100000;
+  pointer-events: none;
+  transform: scaleY(0); 
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.page-curtain.is-closing {
+  transform-origin: bottom;
+  transform: scaleY(1);
+}
+
+@keyframes curtainReveal {
+  0% { transform: scaleY(1); transform-origin: top; }
+  100% { transform: scaleY(0); transform-origin: top; }
+}
+
+.page-curtain.is-opening {
+  animation: curtainReveal 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
 /* Responsive Overrides */
 @media (max-width: 768px) {
   .hero-title { font-size: 2.3rem; }
